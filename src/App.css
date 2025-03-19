@@ -1,0 +1,125 @@
+body {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+}
+
+#container {
+  position: absolute;
+  visibility: hidden;
+}
+
+#paintCanvas {
+  position: absolute;
+  visibility: hidden;
+}
+
+/* .st0 {
+  fill: #e9f904;
+}
+
+.st1 {
+  fill: #E8F20A;
+} */
+
+#canvasOut {
+  border: solid;
+  width: 300px;
+  margin: auto;
+}
+
+#Capa_1 {
+  visibility: hidden;
+  position: absolute;
+  z-index: -10;
+  overflow-x: hidden;
+  /* height: auto; */
+  /* width: 100%; */
+}
+
+#Capa_2 {
+  display: none;
+}
+
+
+
+#canvasFabric {
+  display: none;
+}
+
+#Capa_ {
+  border: solid
+}
+
+#canvasIN {
+  border: solid;
+  /* width: 300px; */
+}
+
+#canvasFab {
+  border: solid;
+  /* margin-left: 350px; */
+  margin: auto;
+  /* display: none; */
+}
+
+#canvasDiv {
+  margin-left: 300px;
+  margin-right: 300px;
+  /* border: solid; */
+
+}
+
+/* #Aja {
+  display: list-item;
+  width: 10%;
+} */
+
+#canvasDiv button {
+  margin-left: 0;
+  border: solid;
+}
+
+#cc {
+  border: solid;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
