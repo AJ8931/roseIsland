@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
 const RoseTown = () => {
-  let camera;
   useEffect(() => {
     const canvas = document.querySelector("canvas.webgl");
     const scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(
+    const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       0.1,
@@ -32,12 +32,7 @@ const RoseTown = () => {
     directionalLight.shadow.camera.left = -50;
     directionalLight.shadow.camera.right = 50;
     directionalLight.shadow.mapSize.set(4096, 4096);
-    // directionalLight.shadow.bias = -0.0005; // Small negative value to reduce dark artifacts
-
     scene.add(directionalLight);
-
-    const helper = new THREE.DirectionalLightHelper(directionalLight, 12);
-    scene.add(helper);
 
     const ambientLight = new THREE.AmbientLight(0x404040, 40);
     scene.add(ambientLight);
@@ -45,34 +40,42 @@ const RoseTown = () => {
     camera.position.set(0, 35, 0);
     camera.lookAt(0, 0, 0);
 
-    // Enable full OrbitControls
+    // OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
-    controls.enableZoom = true;
-    controls.enableRotate = true;
-    controls.enablePan = true;
 
-    // Load GLTF model
+    // Draco Loader
     const loader = new GLTFLoader();
-    const modelUrl = new URL("../MODELS/RoosIsland.gltf", import.meta.url).href;
-    loader.load(modelUrl, (gltf) => {
-      const model = gltf.scene;
-      scene.add(model);
-      model.traverse((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-          child.material.roughness = -0.5; // Lower roughness for smoother appearance
-        }
-      });
-      model.position.set(-5, 0, 0);
-      // camera.position.set(0, 35, 0);
-      model.scale.set(0.9, 0.9, 0.9);
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("/path/to/draco/"); // Set the path to Draco decoder
+    loader.setDRACOLoader(dracoLoader);
+
+    // Lazy Load Model
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        const modelUrl = new URL("../MODELS/RoosIsland.gltf", import.meta.url)
+          .href;
+        loader.load(modelUrl, (gltf) => {
+          const model = gltf.scene;
+          scene.add(model);
+          model.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              child.material.roughness = -0.5;
+            }
+          });
+          model.position.set(-5, 0, 0);
+          model.scale.set(0.9, 0.9, 0.9);
+        });
+        observer.disconnect();
+      }
     });
-    const axesHelper = new THREE.AxesHelper(50);
-    scene.add(axesHelper);
-    // Animation loop
+
+    observer.observe(canvas);
+
+    // Animation Loop
     const animate = () => {
       requestAnimationFrame(animate);
       controls.update();
@@ -80,7 +83,7 @@ const RoseTown = () => {
     };
     animate();
 
-    // Handle window resize
+    // Handle Window Resize
     const onWindowResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
