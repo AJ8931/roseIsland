@@ -32,10 +32,10 @@ const RoseTown = () => {
     directionalLight.shadow.camera.left = -50;
     directionalLight.shadow.camera.right = 50;
     directionalLight.shadow.mapSize.set(4096, 4096); // Higher resolution
-    directionalLight.shadow.bias = -0.00005;
+    directionalLight.shadow.bias = -0.000045;
     scene.add(directionalLight);
 
-    const ambientLight = new THREE.AmbientLight(0x404040, 40);
+    const ambientLight = new THREE.AmbientLight(0x404040, 35);
     scene.add(ambientLight);
 
     camera.position.set(0, 5, 0);
@@ -78,7 +78,7 @@ const RoseTown = () => {
             if (child.isMesh) {
               child.castShadow = true;
               child.receiveShadow = true;
-              child.material.roughness = -0.5;
+              // child.material.roughness = 0.5;
             }
           });
           model.position.set(-5, 0, -35);
