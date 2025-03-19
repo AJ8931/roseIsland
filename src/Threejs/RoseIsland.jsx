@@ -38,7 +38,7 @@ const RoseTown = () => {
     const ambientLight = new THREE.AmbientLight(0x404040, 35);
     scene.add(ambientLight);
 
-    camera.position.set(0, 8, 0);
+    camera.position.set(0, 6, 0);
     camera.lookAt(0, 0, 0);
 
     // OrbitControls
