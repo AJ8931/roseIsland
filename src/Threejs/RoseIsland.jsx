@@ -37,7 +37,7 @@ const RoseTown = () => {
     const ambientLight = new THREE.AmbientLight(0x404040, 40);
     scene.add(ambientLight);
 
-    camera.position.set(0, 35, 0);
+    camera.position.set(0, 5, 0);
     camera.lookAt(0, 0, 0);
 
     // OrbitControls
@@ -66,7 +66,7 @@ const RoseTown = () => {
               child.material.roughness = -0.5;
             }
           });
-          model.position.set(-5, 0, 0);
+          model.position.set(-5, 0, -35);
           model.scale.set(0.9, 0.9, 0.9);
         });
         observer.disconnect();
