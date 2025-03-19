@@ -25,13 +25,14 @@ const RoseTown = () => {
 
     // Lighting
     const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
-    directionalLight.position.set(30, 60, -30);
+    directionalLight.position.set(30, 55, -30);
     directionalLight.castShadow = true;
     directionalLight.shadow.camera.top = 50;
     directionalLight.shadow.camera.bottom = -50;
     directionalLight.shadow.camera.left = -50;
     directionalLight.shadow.camera.right = 50;
-    directionalLight.shadow.mapSize.set(4096, 4096);
+    directionalLight.shadow.mapSize.set(4096, 4096); // Higher resolution
+    directionalLight.shadow.bias = -0.00005;
     scene.add(directionalLight);
 
     const ambientLight = new THREE.AmbientLight(0x404040, 40);
@@ -41,9 +42,23 @@ const RoseTown = () => {
     camera.lookAt(0, 0, 0);
 
     // OrbitControls
+    // OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
+
+    // Disable rotation
+    controls.enableRotate = false; // Disable rotation
+
+    // Enable panning only on left-click and drag
+    controls.mouseButtons = {
+      LEFT: THREE.MOUSE.PAN, // Left-click for panning
+      MIDDLE: THREE.MOUSE.DOLLY, // Middle-click for zooming (optional)
+      RIGHT: THREE.MOUSE.NONE, // Disable right-click
+    };
+
+    // Enable zooming
+    controls.enableZoom = true; // Enable zooming (scroll wheel)
 
     // Draco Loader
     const loader = new GLTFLoader();
