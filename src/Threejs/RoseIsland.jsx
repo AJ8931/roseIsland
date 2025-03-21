@@ -42,28 +42,26 @@ const RoseTown = () => {
     camera.lookAt(0, 0, 0);
 
     // OrbitControls
-    // OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
 
-    // Disable rotation
-    controls.enableRotate = false; // Disable rotation
+    controls.enableRotate = false;
 
     // Enable panning only on left-click and drag
     controls.mouseButtons = {
-      LEFT: THREE.MOUSE.PAN, // Left-click for panning
-      MIDDLE: THREE.MOUSE.DOLLY, // Middle-click for zooming (optional)
-      RIGHT: THREE.MOUSE.NONE, // Disable right-click
+      LEFT: THREE.MOUSE.PAN,
+      MIDDLE: THREE.MOUSE.DOLLY,
+      RIGHT: THREE.MOUSE.NONE,
     };
 
     // Enable zooming
-    controls.enableZoom = true; // Enable zooming (scroll wheel)
+    controls.enableZoom = true;
 
     // Draco Loader
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("/path/to/draco/"); // Set the path to Draco decoder
+    dracoLoader.setDecoderPath("/path/to/draco/");
     loader.setDRACOLoader(dracoLoader);
 
     // Lazy Load Model
@@ -78,7 +76,6 @@ const RoseTown = () => {
             if (child.isMesh) {
               child.castShadow = true;
               child.receiveShadow = true;
-              // child.material.roughness = 0.5;
               child.material.metalness = 0.05;
             }
           });
